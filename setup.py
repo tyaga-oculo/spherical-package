@@ -5,11 +5,11 @@ import pathlib
 from setuptools import setup
 from torch.utils.cpp_extension import BuildExtension, CUDAExtension, CppExtension
 
-module = 'mapped-conv'  # ['tangent-images', 'mapped-conv']
+module = 'tangent-images'  # ['tangent-images', 'mapped-conv']
 compute_arch = 'compute_61'  # Compute architecture for GPU
 use_ninja = False  # [True, False]
 additional_includes = []  # List of any additional include directories
-no_cuda = False # Use True/False here instead of torch.cuda.is_available() to allow CUDA build when building Docker container
+no_cuda = True # Use True/False here instead of torch.cuda.is_available() to allow CUDA build when building Docker container
 
 # Default search paths
 abs_path_here = pathlib.Path(__file__).parent.absolute()
