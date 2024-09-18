@@ -971,7 +971,7 @@ std::vector<torch::Tensor> FindTangentPlaneIntersections(
   }
 
   // Build the AABB tree
-  const Tree tree(Triangle_iterator(triangles),
+  Tree tree(Triangle_iterator(triangles),
                   Triangle_iterator(triangles + 6 * num_quads));
   tree.accelerate_distance_queries();
 
