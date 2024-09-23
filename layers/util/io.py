@@ -1,9 +1,7 @@
-from skimage import io
 import matplotlib.pyplot as plt
-import plyfile
 import torch
 import numpy as np
-import OpenEXR, Imath, array
+import array
 
 
 def torch2numpy(img):
@@ -33,6 +31,7 @@ def load_numpy_img(path, batch_dim=False):
     """
     Loads an image to numpy format with H x W x C dimensions. If batch_dim==True, then returns a 4D B x H x W x C numpy array.
     """
+    from skimage import io
     img = io.imread(path)
     if batch_dim:
         return img[None, ...]
@@ -48,6 +47,7 @@ def load_torch_img(path, batch_dim=False):
 
 def read_exr(image_fpath):
     """ Reads an openEXR file into an RGB matrix with floats """
+    import OpenEXR, Imath
     f = OpenEXR.InputFile(image_fpath)
     dw = f.header()['dataWindow']
     w, h = (dw.max.x - dw.min.x + 1, dw.max.y - dw.min.y + 1)
@@ -69,6 +69,8 @@ def write_ply(
         faces=None,  # 3 x M
         face_rgb=None,  # 3 x M
         text=False):
+    import plyfile
+
     names = 'x,y,z'
     formats = 'f4,f4,f4'
     if normals is not None:
@@ -93,6 +95,7 @@ def write_ply(
 
 def write_heatmap(path, data, max_val=None, cmap_type='plasma'):
     '''Writes a heatmap visualization of the data. Data is a NxM np.float32 array'''
+    from skimage import io
     assert data.ndim == 2, 'Data must be 2-dimensional'
     assert data.dtype == np.float32, 'Data dtype must be np.float32'
 
